@@ -35,9 +35,13 @@ import org.mockito.Mock;
 
 import it.cosenonjaviste.daggermock.DaggerMockRule;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.karumi.katasuperheroes.matchers.ToolbarMatcher.onToolbarWithTitle;
+import static org.hamcrest.core.AllOf.allOf;
 
 @RunWith(AndroidJUnit4.class) @LargeTest public class DetailActivityTest {
 
@@ -67,6 +71,20 @@ import static com.karumi.katasuperheroes.matchers.ToolbarMatcher.onToolbarWithTi
         startActivity(superHero);
 
         onToolbarWithTitle(superHero.getName()).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void showsSuperHeroNameInTitleTextView() throws Exception {
+        SuperHero superHero = givenThereIsASuperHero();
+
+        startActivity(superHero);
+
+        scrollToView(R.id.tv_super_hero_name);
+        onView(allOf(withId(R.id.tv_super_hero_name))).check(matches(isDisplayed()));
+    }
+
+    private void scrollToView(int viewId) {
+        onView(withId(viewId)).perform(scrollTo());
     }
 
     private SuperHero givenThereIsASuperHero() {
