@@ -35,6 +35,10 @@ import org.mockito.Mock;
 
 import it.cosenonjaviste.daggermock.DaggerMockRule;
 
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static com.karumi.katasuperheroes.matchers.ToolbarMatcher.onToolbarWithTitle;
+
 @RunWith(AndroidJUnit4.class) @LargeTest public class DetailActivityTest {
 
     private static final String SUPER_HERO_PHOTO = "https://i.annihil.us/u/prod/marvel/i/mg/c/60/55b6a28ef24fa.jpg";
@@ -62,7 +66,7 @@ import it.cosenonjaviste.daggermock.DaggerMockRule;
 
         startActivity(superHero);
 
-        // onToolbarWithTitle( superHero.getName() ).check(matches(isDisplayed()));
+        onToolbarWithTitle(superHero.getName()).check(matches(isDisplayed()));
     }
 
     private SuperHero givenThereIsASuperHero() {
